@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+
+    <title>Layouts</title>
+
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+
+    <!--    <style>-->
+    <!--        .container {-->
+    <!--            width: auto;-->
+    <!--            max-width: 680px;-->
+    <!--            padding: 0 15px;-->
+    <!--        }-->
+    <!--    </style>-->
+</head>
+<body>
+<!--фрагмент header-->
+<!--<div th:fragment="navs">-->
+<!--    <ul class="nav justify-content-md-center text-bg-dark">-->
+<!--        <li class="nav-item">-->
+<!--            <a class="nav-link" aria-current="page" th:href="@{/users}">Users</a>-->
+<!--        </li>-->
+<!--        <li class="nav-item">-->
+<!--            <a class="nav-link" aria-current="page" th:href="@{/drivers}">Drivers</a>-->
+<!--        </li>-->
+<!--        <li class="nav-item">-->
+<!--            <a class="nav-link" aria-current="page" th:href="@{/bus}">Bus</a>-->
+<!--        </li>-->
+<!--        <li class="nav-item">-->
+<!--            <a class="nav-link" aria-current="page" th:href="@{/travels}">Travels</a>-->
+<!--        </li>-->
+<!--        <li class="nav-item">-->
+<!--            <a class="nav-link" aria-current="page" th:href="@{/routes}">Routes</a>-->
+<!--        </li>-->
+<!--        <li class="nav-item">-->
+<!--            <a class="nav-link" aria-current="page" th:href="@{/routes/dispatcher}">Dispatcher</a>-->
+<!--        </li>-->
+
+
+<!--        &lt;!&ndash;        <form th:action="@{/login}" method="post">&ndash;&gt;-->
+<!--        &lt;!&ndash;            <button class="btn btn-success">Login</button>&ndash;&gt;-->
+<!--        &lt;!&ndash;        </form>&ndash;&gt;-->
+<!--        <form th:action="@{/logout}" method="post">-->
+<!--            <button class="btn btn-danger">Logout</button>-->
+<!--        </form>-->
+<!--    </ul>-->
+<!--</div>-->
+
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark" aria-label="Third navbar example" th:fragment="navs">
+    <div class="container-fluid">
+        <a class="navbar-brand" th:href="@{/}">На главную</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample03"
+                aria-controls="navbarsExample03" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarsExample03">
+            <ul class="navbar-nav me-auto mb-2 mb-sm-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" th:href="@{/users}">Users</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" th:href="@{/drivers}">Drivers</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" th:href="@{/bus}">Bus</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" th:href="@{/travels}">Travels</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" th:href="@{/routes}">Routes</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" th:href="@{/routes/dispatcher1}">Dispatcher</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" th:href="@{/dispatcher/travel}">DisTravels</a>
+                </li>
+            </ul>
+
+            <!--            <form>-->
+            <!--                <input class="form-control" type="text" placeholder="Search" aria-label="Search">-->
+            <!--            </form>-->
+        </div>
+        <form th:action="@{/logout}" method="post">
+            <button class="btn btn-danger">Выйти</button>
+        </form>
+    </div>
+    <script src="/js/bootstrap.bundle.min.js"></script>
+</nav>
+
+
+<!--фрагмент хедер login-->
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark" aria-label="Third navbar example" th:fragment="navs_login">
+    <div class="container-fluid justify-content-center">
+        <h1 class="text-light">Пассажирские перевозки</h1>
+    </div>
+</nav>
+
+<!--фрагмент хедер index-->
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark" aria-label="Third navbar example" th:fragment="navs_index">
+    <div class="container-fluid justify-content-end">
+        <a th:href="@{/login}" class="btn btn-lg btn-primary">Вход</a>
+        <a th:href="@{/registration}" class="btn btn-lg btn-success mx-sm-3 ms-1">Регистрация</a>
+    </div>
+</nav>
+
+<!--фрагмент footer-->
+
+<!--<div class="container-fluid text-center text-bg-dark fixed-bottom"-->
+<!--     th:fragment="footer">-->
+<!--    <span>Footer &copy;</span>-->
+<!--</div>-->
+
+<footer class="text-muted text-center text-small" th:fragment="footer">
+    <div class="container">
+        <p class="mb-1 unselectable">&copy; 2024 Евгений Хозин</p>
+        <!--        <ul class="list-inline">-->
+        <!--            <li class="list-inline-item"><a href="#">Privacy</a></li>-->
+        <!--            <li class="list-inline-item"><a href="#">Terms</a></li>-->
+        <!--            <li class="list-inline-item"><a href="#">Support</a></li>-->
+        <!--        </ul>-->
+    </div>
+</footer>
+
+
+</body>
+</html>

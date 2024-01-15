@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ru" class="h-100" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+
+    <title>Routes List</title>
+
+    <link rel="shortcut icon" th:href="@{/bus.svg}" type="image/svg">
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+</head>
+<body class="d-flex flex-column h-100 bg-light">
+<nav th:insert="~{layout/layouts.html :: navs}"></nav>
+
+<div class="container text-center m-auto">
+    <main class="flex-shrink-0">
+        <h1>Welcome to Routes list !!</h1>
+        <p>[[${userJPA.firstName}]]</p>
+        <p>[[${userJPA.rolesJPA}]]</p>
+
+        <div th:if="${message != null}" class="alert alert-success">
+            [[${message}]]
+        </div>
+
+
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead class="table-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Пассажир</th>
+                    <th>Автобус</th>
+                    <th>Время</th>
+                    <!--            <th>ALL</th>-->
+                    <!--            <th>Статус</th>-->
+                    <th>Кнопки</th>
+                </tr>
+                </thead>
+                <!-- тело таблицы -->
+                <tbody>
+                <!-- цикл -->
+                <th:block th:each="route: ${routeList}">
+                    <tr>
+                        <td>[[${route.id}]]</td>
+                        <td>[[${route.user.firstName}]] [[${route.user.lastName}]]</td>
+                        <td>[[${route.travel.bus.number}]]</td>
+                        <td>[[${route.travel.timeToDrive}]]</td>
+                        <!--                <td>[[${route.status}]]</td>-->
+                        <td>
+                            <!--                    <a th:href="@{'/routes/repair/' + ${route.id}}" class="btn btn-success">-->
+                            <!--                        Status to 1-->
+                            <!--                    </a>-->
+                            <!-- детали -->
+                            <a th:href="@{'/routes/dispatcher/delete/' + ${route.id}}" class="btn btn-warning">
+                                Status to 0
+                            </a>
+                            <!-- кнопка удаления -->
+                            <!--                    <a th:href="@{'/routes/deleteFull/' + ${route.id}}" class="btn btn-danger">-->
+                            <!--                        Delete-->
+                            <!--                    </a>-->
+                        </td>
+                    </tr>
+                </th:block>
+                </tbody>
+            </table>
+        </div>
+
+        <!--        <div>[[${userJPA.username}]]</div>-->
+
+
+    </main>
+</div>
+<a th:href="@{/routes/new}" class="header">add new route</a>
+
+<h4></h4>
+
+<footer class="footer mt-auto py-3" th:insert="~{layout/layouts.html :: footer}"></footer>
+</body>
+</html>

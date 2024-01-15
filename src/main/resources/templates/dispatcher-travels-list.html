@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ru" class="h-100" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+
+    <title>Travels List</title>
+
+    <link rel="shortcut icon" th:href="@{bus.svg}" type="image/svg">
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+</head>
+<body class="d-flex flex-column h-100 bg-light">
+<nav th:insert="~{layout/layouts.html :: navs}"></nav>
+
+<div class="container text-center m-auto">
+    <main class="flex-shrink-0">
+
+        <h1>Welcome to Travels list</h1>
+
+        <a th:href="@{/dispatcher/travels/new}" class="header mt-4">Добавить новую поездку</a>
+
+        <div th:if="${message != null}" class="alert alert-success">
+            [[${message}]]
+        </div>
+
+        <div class="table-responsive mt-4">
+            <table class="table table-bordered">
+                <thead class="table-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>bus</th>
+                    <th>driver</th>
+                    <th>timeToDrive</th>
+                    <th>Routes</th>
+                    <th>ALL</th>
+                    <th>ALL</th>
+                </tr>
+                </thead>
+                <!-- тело таблицы -->
+                <tbody>
+                <!-- цикл -->
+                <th:block th:each="travels: ${travelsLists}">
+                    <tr>
+                        <td>[[${travels.id}]]</td>
+                        <td>[[${travels.bus.number}]]</td>
+                        <td>[[${travels.driver.firstName}]] [[${travels.driver.lastName}]]</td>
+                        <td>[[${travels.timeToDrive}]]</td>
+                        <td>
+                            [[${travels.routes}]]
+                            <!--          <th:block th:each="travels: ${travelsLists}">-->
+                            <!--            <span th:value="${travels.routes}">[[${travels.routes}]]</span>-->
+                            <!--          </th:block>-->
+                        </td>
+
+
+                        <td>[[${travels}]]</td>
+                        <td>
+                            <a th:href="@{'/dispatcher/travels/details/' + ${travels.id}}" class="btn btn-success">
+                                Details
+                            </a>
+                        </td>
+
+                    </tr>
+                </th:block>
+
+                </tbody>
+            </table>
+        </div>
+
+
+    </main>
+</div>
+
+<footer class="footer mt-auto py-3" th:insert="~{layout/layouts.html :: footer}"></footer>
+</body>
+</html>

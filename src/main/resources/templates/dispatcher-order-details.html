@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="ru" class="h-100" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Order details</title>
+
+    <link rel="shortcut icon" href="/bus.svg" type="image/svg">
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+    <link href="/style.css" rel="stylesheet">
+</head>
+
+<body>
+<nav th:insert="~{layout/layouts.html :: navs}"></nav>
+
+<div class="container text-center m-auto">
+
+    <main>
+        <h2>Рейс [[${directionName}]]</h2>
+        <h4>Время рейса: [[${travels.timeToDrive.toString()}]]</h4>
+        <h4 class="mb-5">Номер автобуса: [[${travels.bus.number}]]</h4>
+
+        <div class="table-responsive container">
+            <table class="table table-bordered col-md-8 col-sm-8">
+                <thead class="table-dark">
+                <tr>
+                    <!--                <th>#</th>-->
+                    <th>Время посадки</th>
+                    <th>Место</th>
+                    <th>Пассажир</th>
+                    <!--                <th>ALL</th>-->
+                </tr>
+                </thead>
+                <tbody>
+
+                <th:block th:each="route: ${usersInTravel}">
+                    <tr>
+                        <!--                    <td>[[${route.id}]]</td>-->
+                        <td>[[${route.landingTime}]]</td>
+                        <td>[[${route.landingSite.placeName}]]</td>
+                        <td>[[${route.user.firstName}]] [[${route.user.lastName}]]</td>
+                        <!--                    <td>[[${route}]]</td>-->
+                    </tr>
+                </th:block>
+
+                </tbody>
+            </table>
+        </div>
+
+    </main>
+</div>
+
+
+<footer class="footer py-3" th:insert="~{layout/layouts.html :: footer}"></footer>
+</body>
+</html>

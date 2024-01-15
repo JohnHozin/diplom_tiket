@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ru" class="h-100" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+
+    <title>Регистрация</title>
+
+    <link rel="shortcut icon" th:href="@{/bus.svg}" type="image/svg">
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+    <link href="/signin.css" rel="stylesheet">
+    <link href="/style.css" rel="stylesheet">
+</head>
+
+<body class="text-center">
+<nav th:insert="~{layout/layouts.html :: navs_login}"></nav>
+
+<div class="container text-center m-auto">
+
+    <main>
+        <div class="py-5 text-center">
+            <img class="d-block mx-auto mb-4" src="/bus.svg" alt="" width="72" height="57">
+            <h2>Регистрация</h2>
+            <i class="bi bi-bus-front-fill"></i>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-md-7 col-lg-8">
+                <form th:action="@{/registration}" th:object="${userJPA}" method="post" class="needs-validation"
+                      novalidate>
+                    <div class="row g-3">
+                        <div class="col-sm-6">
+                            <label class="form-label">Фамилия</label>
+                            <input th:field="*{lastName}" minlength="1" maxlength="50" type="text" class="form-control"
+                                   placeholder="Иванов" value="" required>
+                            <div class="invalid-feedback">
+                                Требуется фамилия
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <label class="form-label">Имя</label>
+                            <input th:field="*{firstName}" minlength="1" maxlength="50" type="text" class="form-control"
+                                   placeholder="Иван" value="" required>
+                            <div class="invalid-feedback">
+                                Требуется имя
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <label class="form-label">Отчество</label>
+                            <input th:field="*{surName}" maxlength="50" type="text" class="form-control"
+                                   placeholder="Иванович" value="">
+                            <!--              <div class="invalid-feedback">-->
+                            <!--                Valid first name is required.-->
+                            <!--              </div>-->
+                        </div>
+
+                        <div class="col-sm-6">
+                            <label class="form-label">Телефон</label>
+                            <input th:field="*{phone}" minlength="1" maxlength="50" type="tel" class="form-control"
+                                   placeholder="" value="" required>
+                            <div class="invalid-feedback">
+                                Требуется телефон
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <label class="form-label">Логин</label>
+                            <div class="input-group has-validation">
+                                <span class="input-group-text">@</span>
+                                <input th:field="*{username}" minlength="1" maxlength="50" type="text"
+                                       class="form-control" placeholder="" required>
+                                <div class="invalid-feedback">
+                                    Требуется логин
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <label class="form-label">Пароль</label>
+                            <input th:field="*{password}" minlength="1" maxlength="50" type="password"
+                                   class="form-control" placeholder="" required>
+                            <div class="invalid-feedback">
+                                Требуется пароль
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr class="my-4">
+                    <button class="w-100 btn btn-primary btn-lg" type="submit">Зарегистрироваться</button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+
+</div>
+<footer class="footer mt-auto py-3" th:insert="~{layout/layouts.html :: footer}"></footer>
+<script src="/form-validation.js"></script>
+</body>
+</html>

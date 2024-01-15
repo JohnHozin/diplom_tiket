@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>user details</title>
+    <link rel="shortcut icon" th:href="@{/favicon.svg}" type="image/svg">
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+</head>
+<body>
+<nav th:insert="~{layout/layouts.html :: navs}"></nav>
+
+<div class="container-fluid text-center">
+    <h1>user details</h1>
+    <h4>id = [[${user.id}]] </h4>
+    <h4>firstName = [[${user.firstName}]]</h4>
+    <h4>lastName = [[${user.lastName}]]</h4>
+    <h4>surName = [[${user.surName}]]</h4>
+    <h4>surName = [[${user}]]</h4>
+</div>
+
+<footer th:insert="~{layout/layouts.html :: footer}"></footer>
+</body>
+</html>

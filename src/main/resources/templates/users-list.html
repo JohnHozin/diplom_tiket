@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ru" class="h-100" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+
+    <title>Users List</title>
+
+    <link rel="shortcut icon" th:href="@{bus.svg}" type="image/svg">
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+</head>
+<body class="d-flex flex-column h-100 bg-light">
+<nav th:insert="~{layout/layouts.html :: navs}"></nav>
+
+<div class="container-fluid text-center">
+    <main class="flex-shrink-0">
+
+        <h1>Welcome to User list</h1>
+
+        <div th:if="${message != null}" class="alert alert-success">
+            [[${message}]]
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead class="table-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>FirstName</th>
+                    <th>LastName</th>
+                    <th>set</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <!-- тело таблицы -->
+                <tbody>
+                <!-- цикл -->
+                <th:block th:each="user: ${usersList}">
+                    <tr>
+                        <td>[[${user.id}]]</td>
+                        <td>[[${user.firstName}]]</td>
+                        <td>[[${user.lastName}]]</td>
+                        <td>
+                            <table class="table table-bordered">
+                                <thead class="table-dark">
+                                <tr>
+                                    <th>Направление</th>
+                                    <th>Время</th>
+                                    <th>Автобус</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <!-- цикл -->
+                                <th:block th:each="route: ${user.travels}">
+                                    <tr>
+                                        <td th:if="${route.travel.forward}" >Чистополь - Казань</td>
+                                        <td th:if="${!route.travel.forward}" >Казань - Чистополь</td>
+                                        <td>[[${route.travel.timeToDrive}]]</td>
+                                        <td>[[${route.travel.bus.number}]]</td>
+                                    </tr>
+                                </th:block>
+                                </tbody>
+                            </table>
+                        </td>
+                        <td>
+                            <!-- детали -->
+                            <a th:href="@{'/users/details/' + ${user.id}}" class="btn btn-success">
+                                Details
+                            </a>
+                            <!-- редактирование -->
+                            <a th:href="@{'/users/update/' + ${user.id}}" class="btn btn-warning">
+                                Update
+                            </a>
+                            <!-- кнопка удаления -->
+                            <a th:href="@{'/users/delete/' + ${user.id}}" class="btn btn-danger">
+                                Delete
+                            </a>
+                        </td>
+                    </tr>
+                </th:block>
+                </tbody>
+            </table>
+        </div>
+        <a th:href="@{/users/new}" class="header">add new user</a>
+    </main>
+</div>
+
+<footer class="footer mt-auto py-3" th:insert="~{layout/layouts.html :: footer}"></footer>
+<!--<script src="/js/user-list.js"></script>-->
+</body>
+</html>

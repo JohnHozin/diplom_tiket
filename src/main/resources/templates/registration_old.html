@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ru" class="h-100" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+
+    <title>Регистрация</title>
+
+    <link rel="shortcut icon" th:href="@{/bus.svg}" type="image/svg">
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+    <link href="/signin.css" rel="stylesheet">
+    <link href="/style.css" rel="stylesheet">
+</head>
+
+<body class="text-center">
+<nav th:insert="~{layout/layouts.html :: navs_login}"></nav>
+
+<main class="form-signin">
+
+    <form th:action="@{/registration}" th:object="${userJPA}" method="post">
+        <img class="mb-4" src="/ava_bus.png" alt="" width="200" height="200">
+        <h1 class="h3 mb-3 fw-normal">Регистрация</h1>
+
+        <div class="form-floating">
+            <input type="text" class="form-control" name="username" placeholder="89999999999" th:field="*{username}" required minlength="1" maxlength="50">
+            <label>Введите логин</label>
+        </div>
+        <div class="form-floating">
+            <input type="password" class="form-control" name="password" placeholder="Пароль" th:field="*{password}" required minlength="1" maxlength="50">
+            <label>Введите пароль</label>
+        </div>
+
+        <button class="w-100 btn btn-lg btn-success" type="submit">Зарегистрироваться</button>
+
+
+    </form>
+
+</main>
+
+<footer class="footer mt-auto py-3" th:insert="~{layout/layouts.html :: footer}"></footer>
+</body>
+</html>

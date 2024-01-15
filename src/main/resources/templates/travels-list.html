@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ru" class="h-100" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+
+    <title>Travels List</title>
+
+    <link rel="shortcut icon" th:href="@{bus.svg}" type="image/svg">
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+    <link href="/style.css" rel="stylesheet">
+</head>
+
+<body>
+<nav th:insert="~{layout/layouts.html :: navs}"></nav>
+
+<div class="container-fluid text-center m-auto">
+    <main class="flex-shrink-0">
+
+        <div th:if="${message != null}" class="alert alert-success">
+            [[${message}]]
+        </div>
+
+        <div class="table-responsive container mt-5">
+            <table class="table table-borderless">
+                <thead>
+                <h1>Рейсы Чистополь - Казань</h1>
+                <th:block th:each="travels: ${travelsLists}">
+                    <tr>
+                        <a th:if="${travels.forward}" th:href="@{'/dispatcher/travel/chistopol-kazan:' + ${travels.dateParsed} + '/' + ${travels.id}}"
+                           class="btn btn-lg btn-warning full_travel_button">
+                            [[${travels.dateParsed}]] [[${travels.timeParsed}]]
+                        </a>
+                    </tr>
+                </th:block>
+                <h1>Рейсы Казань - Чистополь</h1>
+                <th:block th:each="travels: ${travelsLists}">
+                    <tr>
+                        <a th:if="${travels.forward}" th:href="@{'/dispatcher/travel/kazan-chistopol:' + ${travels.dateParsed} + '/' + ${travels.id}}"
+                           class="btn btn-lg btn-warning full_travel_button">
+                            [[${travels.dateParsed}]] [[${travels.timeParsed}]]
+                        </a>
+                    </tr>
+                </th:block>
+                </thead>
+            </table>
+        </div>
+    </main>
+</div>
+
+<footer class="footer mt-auto py-3" th:insert="~{layout/layouts.html :: footer}"></footer>
+</body>
+</html>

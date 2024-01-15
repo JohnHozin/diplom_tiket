@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ru" class="h-100" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Travel details</title>
+
+    <link rel="shortcut icon" th:href="@{bus.svg}" type="image/svg">
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+    <link href="/style.css" rel="stylesheet">
+</head>
+<body>
+<nav th:insert="~{layout/layouts.html :: navs}"></nav>
+
+<div class="container-fluid text-center m-auto">
+
+    <main>
+        <h1>Рейсы Москва - Казань [[${dateParsed}]]</h1>
+
+        <div th:if="${message != null}" class="alert alert-success">
+            [[${message}]]
+        </div>
+
+
+        <div class="table-responsive container mt-5">
+            <table class="table table-borderless">
+                <thead>
+<!--                <th:block th:each="travels: ${travelsDateParsed}">-->
+<!--                    <tr>-->
+<!--                        <a th:text="${travels.timeParsed}"-->
+<!--                           th:href="@{'/travels/order/' + ${dateParsed} + '/' + ${travels.id}}"-->
+<!--                           class="btn btn-lg btn-warning travel_button"></a>-->
+<!--                    </tr>-->
+<!--                </th:block>-->
+
+
+                <th:block th:each="travels: ${travelsDateParsed}">
+                    <tr>
+                        <a th:text="${travels.timeParsed}"
+                           th:href="@{'/travels/order/' + ${dateParsed} + '/' + ${travels.id}}"
+                           class="btn btn-lg btn-warning travel_button"></a>
+                        <!--                        <div th:if="""$"></div>-->
+                    </tr>
+                </th:block>
+                </thead>
+            </table>
+        </div>
+
+
+    </main>
+</div>
+
+
+<footer th:insert="~{layout/layouts.html :: footer}"></footer>
+</body>
+</html>

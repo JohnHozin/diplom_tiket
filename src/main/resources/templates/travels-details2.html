@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>travels details</title>
+    <link rel="shortcut icon" th:href="@{/favicon.svg}" type="image/svg">
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+</head>
+<body>
+<nav th:insert="~{layout/layouts.html :: navs}"></nav>
+
+<div class="container-fluid text-center">
+
+    <table class="table table-bordered">
+        <thead class="table-dark">
+        <tr>
+            <th>ID</th>
+            <th>user</th>
+            <th>ALL</th>
+        </tr>
+        </thead>
+        <tbody>
+        <th:block th:each="route: ${usersInTravel}">
+            <tr>
+                <td>[[${route.id}]]</td>
+                <td>[[${route.user.firstName}]] [[${route.user.lastName}]]</td>
+                <td>[[${route}]]</td>
+            </tr>
+        </th:block>
+        </tbody>
+    </table>
+</div>
+
+
+<footer th:insert="~{layout/layouts.html :: footer}"></footer>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ru" class="h-100" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Order list</title>
+
+    <link rel="shortcut icon" href="/bus.svg" type="image/svg">
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+    <link href="/style.css" rel="stylesheet">
+</head>
+
+<body>
+<nav th:insert="~{layout/layouts.html :: navs}"></nav>
+
+<div class="container-fluid text-center m-auto">
+
+    <main>
+        <h1>Рейсы [[${directionName}]] [[${dateParsed}]]</h1>
+
+        <div th:if="${message != null}" class="alert alert-success">
+            [[${message}]]
+        </div>
+
+        <div class="table-responsive container mt-5">
+            <table class="table table-borderless">
+                <thead>
+                <th:block th:each="travels: ${travelsInvalid}">
+                    <tr>
+<!--                        th:text="${travels.timeParsed}"-->
+                        <a th:href="@{'/order/' + ${direction} + ':' + ${dateParsed} + '/' + ${travels.id}}"
+                           class="btn btn-lg btn-secondary travel_button disabled px-1">
+                            <p>[[${travels.timeParsed}]]</p>
+                            <p>Запись закрыта</p>
+                        </a>
+                    </tr>
+
+                </th:block>
+                <th:block th:each="travels: ${travelsValid}">
+                    <tr>
+                        <a th:if="${travels.getRoutes.size < travels.bus.capacity}" th:href="@{'/order/' + ${direction} + ':' + ${dateParsed} + '/' + ${travels.id}}"
+                           class="btn btn-lg btn-warning travel_button px-1">
+                            <p>[[${travels.timeParsed}]]</p>
+                            <p>Мест осталось: [[${travels.bus.capacity - travels.getRoutes.size}]]</p>
+                        </a>
+
+                        <a th:if="${travels.getRoutes.size == travels.bus.capacity}" th:href="@{'/order/' + ${direction} + ':' + ${dateParsed} + '/' + ${travels.id}}"
+                           class="btn btn-lg btn-secondary travel_button disabled">
+                            <p>[[${travels.timeParsed}]]</p>
+                            <p>Мест нет</p>
+                        </a>
+                    </tr>
+                </th:block>
+                </thead>
+            </table>
+        </div>
+
+    </main>
+</div>
+
+
+<footer class="footer py-3" th:insert="~{layout/layouts.html :: footer}"></footer>
+</body>
+</html>

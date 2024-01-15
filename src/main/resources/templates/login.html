@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ru" class="h-100" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+
+    <title>Войти</title>
+
+    <link rel="shortcut icon" th:href="@{bus.svg}" type="image/svg">
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+    <link href="/signin.css" rel="stylesheet">
+    <link href="/style.css" rel="stylesheet">
+</head>
+
+<body class="d-flex flex-column h-100 bg-light text-center">
+<nav th:insert="~{layout/layouts.html :: navs_login}"></nav>
+
+    <main class="form-signin">
+
+        <div th:if="${param.error}">
+            Неправильный логин или пароль
+        </div>
+
+        <form th:action="@{/login}" method="post">
+            <img class="mb-4" src="/ava_bus.png" alt="" width="200" height="200">
+            <h1 class="h3 mb-3 fw-normal">Вход</h1>
+
+            <div class="form-floating">
+                <input type="text" class="form-control" name="username" placeholder="89999999999">
+                <label>Логин</label>
+            </div>
+            <div class="form-floating">
+                <input type="password" class="form-control" name="password" placeholder="Пароль">
+                <label>Пароль</label>
+            </div>
+
+            <div class="checkbox mb-3">
+                <label>
+                    <input type="checkbox" value="remember-me"> Запомнить меня
+                </label>
+            </div>
+            <button class="w-100 btn btn-lg btn-primary" type="submit">Войти</button>
+
+        </form>
+        <div class="d-flex justify-content-end mt-2">
+            <a th:href="@{/registration}" class="header">Регистрация</a>
+        </div>
+
+    </main>
+
+
+<footer class="footer mt-auto py-3" th:insert="~{layout/layouts.html :: footer}"></footer>
+</body>
+</html>
