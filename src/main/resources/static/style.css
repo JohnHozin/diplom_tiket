@@ -25,7 +25,7 @@ body {
 
 .index_button {
     width: 25%;
-    min-width: 150px;
+    min-width: 100px;
     max-width: 250px;
     margin: 3px;
 }
@@ -51,4 +51,22 @@ body {
     max-width: 250px;
     margin: 4px;
     margin-bottom: 10px;
+}
+
+@media screen and (max-width: 600px) {
+    .index_button, .travel_button{
+        min-width: 100px;
+        padding: 0.25rem 0.5rem;
+        font-size: 0.875rem;
+        border-radius: 0.25rem;
+    }
+}
+
+@media screen and (min-width: 601px) {
+    .index_button, .travel_button{
+        min-width: 150px;
+        padding: 0.5rem 1rem;
+        font-size: 1.25rem;
+        border-radius: 0.5rem;
+    }
 }

@@ -42,6 +42,4 @@ public class TravelController {
         model.addAttribute("travelsLists", travelsLists);
         return "travels-list";
     }
-
-
 }

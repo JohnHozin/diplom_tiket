@@ -23,14 +23,14 @@
             [[${message}]]
         </div>
 
-        <div class="table-responsive container mt-5">
+        <div class="table-responsive mt-3">
             <table class="table table-borderless">
                 <thead>
                 <th:block th:each="travels: ${travelsInvalid}">
                     <tr>
 <!--                        th:text="${travels.timeParsed}"-->
                         <a th:href="@{'/order/' + ${direction} + ':' + ${dateParsed} + '/' + ${travels.id}}"
-                           class="btn btn-lg btn-secondary travel_button disabled px-1">
+                           class="btn btn-secondary travel_button disabled px-1">
                             <p>[[${travels.timeParsed}]]</p>
                             <p>Запись закрыта</p>
                         </a>
@@ -40,13 +40,13 @@
                 <th:block th:each="travels: ${travelsValid}">
                     <tr>
                         <a th:if="${travels.getRoutes.size < travels.bus.capacity}" th:href="@{'/order/' + ${direction} + ':' + ${dateParsed} + '/' + ${travels.id}}"
-                           class="btn btn-lg btn-warning travel_button px-1">
+                           class="btn btn-warning travel_button px-1">
                             <p>[[${travels.timeParsed}]]</p>
-                            <p>Мест осталось: [[${travels.bus.capacity - travels.getRoutes.size}]]</p>
+                            <p>Осталось мест: [[${travels.bus.capacity - travels.getRoutes.size}]]</p>
                         </a>
 
                         <a th:if="${travels.getRoutes.size == travels.bus.capacity}" th:href="@{'/order/' + ${direction} + ':' + ${dateParsed} + '/' + ${travels.id}}"
-                           class="btn btn-lg btn-secondary travel_button disabled">
+                           class="btn btn-secondary travel_button disabled">
                             <p>[[${travels.timeParsed}]]</p>
                             <p>Мест нет</p>
                         </a>

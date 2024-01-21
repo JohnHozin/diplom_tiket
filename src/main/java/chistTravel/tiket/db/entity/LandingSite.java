@@ -21,7 +21,7 @@ public class LandingSite {
     @OneToMany(mappedBy = "landingSite")
     private List<Route> routes;
 
-    @Column(length = 8)
+    @Column
     private boolean direction;
 
     public Long getId() {

@@ -9,13 +9,15 @@
 
     <link rel="shortcut icon" th:href="@{bus.svg}" type="image/svg">
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+    <link href="/style.css" rel="stylesheet">
 </head>
+
 <body class="d-flex flex-column h-100 bg-light">
 <nav th:insert="~{layout/layouts.html :: navs}"></nav>
 
-<div class="container-fluid text-center">
-    <main class="flex-shrink-0">
+<div class="container-fluid text-center m-auto">
 
+    <main>
         <h1>Welcome to User list</h1>
 
         <div th:if="${message != null}" class="alert alert-success">
@@ -56,8 +58,8 @@
                                     <tr>
                                         <td th:if="${route.travel.forward}" >Чистополь - Казань</td>
                                         <td th:if="${!route.travel.forward}" >Казань - Чистополь</td>
-                                        <td>[[${route.travel.timeToDrive}]]</td>
-                                        <td>[[${route.travel.bus.number}]]</td>
+                                        <td>[[${route.landingTime}]] [[${route.landingSite.placeName}]]</td>
+                                        <td>[[${route.travel.bus.busName}]] [[${route.travel.bus.number}]]</td>
                                     </tr>
                                 </th:block>
                                 </tbody>
@@ -86,7 +88,7 @@
     </main>
 </div>
 
-<footer class="footer mt-auto py-3" th:insert="~{layout/layouts.html :: footer}"></footer>
+<footer class="footer py-3" th:insert="~{layout/layouts.html :: footer}"></footer>
 <!--<script src="/js/user-list.js"></script>-->
 </body>
 </html>

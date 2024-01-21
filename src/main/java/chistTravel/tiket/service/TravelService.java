@@ -58,39 +58,11 @@ public class TravelService {
         List<Travels> travelsForDateDisabled = new ArrayList<>();
         LocalTime timeNow = LocalTime.now();
         LocalDate dateNow = LocalDate.now();
-//        String [] dateSplit = date.split(".");
-//        System.out.println(dateSplit[0]);
-//        System.out.println(dateSplit[1]);
-//        LocalDate dateX = LocalDate.of(Integer.parseInt(dateSplit[2]),Integer.parseInt(dateSplit[1]),Integer.parseInt(dateSplit[0]));
         System.out.println("date = " + dateParsed);
         System.out.println("dateNow = " + dateNow);
         System.out.println("timeNow = " + timeNow);
-//        System.out.println("dateX = " + dateX);
         LocalTime timePlusHour = timeNow.plusHours(1);
         System.out.println(timePlusHour);
-//        DateFormatter formatter = DateFormatter.parse();
-//        boolean after =
-
-//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
-//        if (date.equals(formatter.format(dateNow).split(" ")[0])) {
-//            for (Travels travel: travels) {
-//                if (travel.getDateParsed().equals(date)) {
-//                    if ()
-//                    travelsForDateDisabled.add(travel);
-//                }
-//            }
-//        }
-//
-//        time = LocalDateTime.now();
-//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
-//        user.setRegistered(formatter.format(time));
-
-
-
-//        Collections.sort(travelsForDate, (a, b) -> {
-//            return a.getTimeParsed() > b.getTimeParsed();
-//        });
-//        travelsForDateDisabled.sort(Comparator.comparing(Travels::getTimeParsed));
 
         return travelsForDateDisabled;
     }
