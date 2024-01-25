@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.Set;
 
 @Controller
-@RequestMapping("/dispatcher/travel")
+@RequestMapping("/travel")
 public class DispatcherTravelController {
 
     @Autowired
@@ -69,23 +69,23 @@ public class DispatcherTravelController {
         Travels saved = travelService.saveTravel(travels);
         // сообщение о том что студент добавлен
         ra.addFlashAttribute("message", "Travels " + saved + " saved successfully");
-        return "redirect:/dispatcher/travels";
+        return "redirect:/dispatcher/travel";
     }
 
-//    @GetMapping("/details/{id}")
-//    public String detailsTravels(@PathVariable("id") Long id, Model model) {
-//        Travels travels = travelService.findTravelsById(id);
-//        model.addAttribute("travels", travels);
-//        List<Route> usersInTravel = travels.getRoutes();
-//        model.addAttribute("usersInTravel", usersInTravel);
-//
-//        List<Integer> listNumbers = new ArrayList<>();
-//        for (int i =1; i <=usersInTravel.size(); i ++){
-//            listNumbers.add(i);
-//        }
-//        model.addAttribute("listNumbers", listNumbers);
-//        return "dispatcher-travels-details";
-//    }
+    @GetMapping("/details/{id}")
+    public String detailsTravels(@PathVariable("id") Long id, Model model) {
+        Travels travels = travelService.findTravelsById(id);
+        model.addAttribute("travels", travels);
+        List<Route> usersInTravel = travels.getRoutes();
+        model.addAttribute("usersInTravel", usersInTravel);
+
+        List<Integer> listNumbers = new ArrayList<>();
+        for (int i =1; i <=usersInTravel.size(); i ++){
+            listNumbers.add(i);
+        }
+        model.addAttribute("listNumbers", listNumbers);
+        return "dispatcher-travels-details";
+    }
 
     @GetMapping("/{date}/{id}")
     public String detailsOrder(@PathVariable("id") Long id, @PathVariable("date") String date, Model model) {

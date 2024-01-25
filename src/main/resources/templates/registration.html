@@ -7,15 +7,14 @@
 
     <title>Регистрация</title>
 
-    <link rel="shortcut icon" th:href="@{/bus.svg}" type="image/svg">
+    <link rel="shortcut icon" th:href="@{bus.svg}" type="image/svg">
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
     <link href="/signin.css" rel="stylesheet">
     <link href="/style.css" rel="stylesheet">
 </head>
 
 <body class="text-center">
-<nav th:insert="~{layout/layouts.html :: navs_login}"></nav>
-
+<nav th:insert="~{layout/layouts.html :: navs}"></nav>
 <div class="container text-center m-auto">
 
     <main>
@@ -30,10 +29,10 @@
                 <form th:action="@{/registration}" th:object="${userJPA}" method="post" class="needs-validation"
                       novalidate>
                     <div class="row g-3">
-                        <div class="col-sm-6">
+                        <div class="col-sm-12">
                             <label class="form-label">Фамилия</label>
                             <input th:field="*{lastName}" minlength="1" maxlength="50" type="text" class="form-control"
-                                   placeholder="Иванов" value="" required>
+                                   placeholder="Иванов" required>
                             <div class="invalid-feedback">
                                 Требуется фамилия
                             </div>
@@ -52,33 +51,24 @@
                             <label class="form-label">Отчество</label>
                             <input th:field="*{surName}" maxlength="50" type="text" class="form-control"
                                    placeholder="Иванович" value="">
-                            <!--              <div class="invalid-feedback">-->
-                            <!--                Valid first name is required.-->
-                            <!--              </div>-->
-                        </div>
-
-                        <div class="col-sm-6">
-                            <label class="form-label">Телефон</label>
-                            <input th:field="*{phone}" minlength="1" maxlength="50" type="tel" class="form-control"
-                                   placeholder="" value="" required>
-                            <div class="invalid-feedback">
-                                Требуется телефон
-                            </div>
                         </div>
 
                         <div class="col-12">
-                            <label class="form-label">Логин</label>
+                            <label class="form-label">Телефон</label>
                             <div class="input-group has-validation">
-                                <span class="input-group-text">@</span>
+                                <span class="input-group-text">&#x260E;</span>
                                 <input th:field="*{username}" minlength="1" maxlength="50" type="text"
                                        class="form-control" placeholder="" required>
                                 <div class="invalid-feedback">
-                                    Требуется логин
+                                    Требуется телефон
+                                </div>
+                                <div class="invalid_text">
+                                    [[${usernameError}]]
                                 </div>
                             </div>
                         </div>
 
-                        <div class="col-12">
+                        <div class="col-sm-12">
                             <label class="form-label">Пароль</label>
                             <input th:field="*{password}" minlength="1" maxlength="50" type="password"
                                    class="form-control" placeholder="" required>
@@ -94,7 +84,6 @@
             </div>
         </div>
     </main>
-
 
 </div>
 <footer class="footer mt-auto py-3" th:insert="~{layout/layouts.html :: footer}"></footer>

@@ -1,61 +1,66 @@
 <!DOCTYPE html>
-<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html lang="ru" class="h-100" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>travels details</title>
-    <link rel="shortcut icon" th:href="@{/favicon.svg}" type="image/svg">
-    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Order details</title>
+
+  <link rel="shortcut icon" href="/bus.svg" type="image/svg">
+  <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+  <link href="/style.css" rel="stylesheet">
 </head>
+
 <body>
 <nav th:insert="~{layout/layouts.html :: navs}"></nav>
 
-<div class="container-fluid text-center">
+<div class="container-fluid text-center m-auto">
 
-    <h4>[[${travels.bus.number}]] [[${travels.timeToDrive.toString()}]]</h4>
-    <h4>[[${travels.driver.firstName}]] [[${travels.driver.lastName}]]</h4>
+  <main>
 
-    <table class="table table-bordered">
-        <thead class="table-dark">
-        <tr>
-            <th>#</th>
-            <th>user</th>
-            <th>ALL</th>
-        </tr>
-        </thead>
-        <tbody>
 
-        <!--            <th:block th:each="list: ${listNumbers}">-->
-        <!--                <td>[[${list}]]</td>-->
+    <div class="row justify-content-center">
+      <div class="col-md-7 col-lg-8">
+        <form th:action="@{'/dispatcher/order/' + ${date} + '/' + ${id_order}}" th:object="${userJPA}" method="post" class="needs-validation"
+              novalidate>
+          <div class="row g-3">
+            <div class="col-sm-12">
+              <label class="form-label">Фамилия</label>
+              <input th:field="*{lastName}" minlength="1" maxlength="50" type="text" class="form-control"
+                     placeholder="Иванов" required>
+              <div class="invalid-feedback">
+                Требуется фамилия
+              </div>
+            </div>
 
-        <th:block th:each="route: ${usersInTravel}">
-            <tr>
-                <td>[[${route.id}]]</td>
-                <td>[[${route.user.firstName}]] [[${route.user.lastName}]]</td>
-                <td>[[${route}]]</td>
-            </tr>
-        </th:block>
-        <!--            </th:block>-->
+            <div class="col-12">
+              <label class="form-label">Телефон</label>
+              <div class="input-group has-validation">
+                <span class="input-group-text">&#x260E;</span>
+                <input th:field="*{username}" minlength="1" maxlength="50" type="text"
+                       class="form-control" placeholder="" required>
+                <div class="invalid-feedback">
+                  Требуется телефон
+                </div>
+              </div>
+            </div>
+          </div>
 
-        </tbody>
-    </table>
+          <hr class="my-4">
+          <button class="w-100 btn btn-primary btn-lg" type="submit">Выберете место посадки</button>
+        </form>
+      </div>
+    </div>
 
-    <!--    <table class="table table-bordered">-->
-    <!--        <thead class="table-dark">-->
-    <!--        <tr>-->
-    <!--            <th>ALL</th>-->
-    <!--        </tr>-->
-    <!--        </thead>-->
-    <!--        <tbody>-->
-    <!--        <th:block th:each="list: ${listNumbers}">-->
-    <!--            <tr>-->
-    <!--                <td>[[${list}]]</td>-->
-    <!--            </tr>-->
-    <!--        </th:block>-->
-    <!--        </tbody>-->
-    <!--    </table>-->
+
+
+
+  </main>
 </div>
 
 
-<footer th:insert="~{layout/layouts.html :: footer}"></footer>
+<footer class="footer py-3" th:insert="~{layout/layouts.html :: footer}"></footer>
+<script src="/form-validation.js"></script>
 </body>
 </html>

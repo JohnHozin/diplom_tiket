@@ -12,10 +12,10 @@ public class LandingSite {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 100)
+    @Column(nullable = false)
     private String placeName;
 
-    @Column(nullable = false, length = 10)
+    @Column(nullable = false)
     private String time;
 
     @OneToMany(mappedBy = "landingSite")

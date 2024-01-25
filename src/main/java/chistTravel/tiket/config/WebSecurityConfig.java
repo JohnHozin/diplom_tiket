@@ -14,7 +14,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
-public class WebSecurityConfig{
+public class WebSecurityConfig {
 
     private UserJPAService userJPAService;
     @Autowired
@@ -26,10 +26,16 @@ public class WebSecurityConfig{
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/", "/home", "/login", "/students", "/signin" ,"/webjars/**", "/ava_bus.png", "/bus.svg", "signin.css", "style.css", "/registration").permitAll()
-                        .requestMatchers("/routes/dispatcher/**").hasRole("ADMIN")
-//                        .requestMatchers("/travels/**").hasRole("DISPATCHER")
-                        .anyRequest().authenticated()
+                                .requestMatchers("/", "/login", "/webjars/**", "/ava_bus.png", "/bus.svg", "signin.css", "style.css", "/registration", "form-validation.js", "/order/*").permitAll()
+                                .requestMatchers("/users/details/**").hasRole("DISPATCHER")
+                                .requestMatchers("/users/**").hasRole("ADMIN")
+                                .requestMatchers("/bus/**").hasRole("ADMIN")
+                                .requestMatchers("/drivers/accountDriver").hasRole("DRIVER")
+                                .requestMatchers("/drivers/**").hasRole("DISPATCHER")
+                                .requestMatchers("/dispatcher/**").hasRole("DISPATCHER")
+                                .requestMatchers("/travels/**").hasRole("DRIVER")
+                                .requestMatchers("/travels/**").hasRole("DISPATCHER")
+                                .anyRequest().authenticated()
 
                         // разрешить доступ всем
 //                        .anyRequest().permitAll()

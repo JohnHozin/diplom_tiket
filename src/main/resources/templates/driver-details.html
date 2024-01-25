@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ru" class="h-100" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Личный кабинет</title>
+
+    <link rel="shortcut icon" th:href="@{/bus.svg}" type="image/svg">
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+    <link href="/style.css" rel="stylesheet">
+</head>
+
+<body>
+<nav th:insert="~{layout/layouts.html :: navs}"></nav>
+
+<div class="container-fluid text-center m-auto">
+    <main>
+        <div th:if="${message != null}" class="alert alert-success">
+            [[${message}]]
+        </div>
+
+        <h4>Фамилия: [[${driver.lastName}]]</h4>
+        <h4>Имя: [[${driver.firstName}]]</h4>
+        <h4>Отчество: [[${driver.surName}]]</h4>
+        <h4>Телефон: [[${driver.username}]]</h4>
+
+        <div class="table-responsive mt-3">
+            <table class="table table-bordered">
+                <thead class="table-dark">
+                <tr>
+                    <th>Дата</th>
+                    <th>Направление</th>
+                    <th>Автобус</th>
+                    <th>Действия</th>
+                </tr>
+                </thead>
+                <tbody>
+                <th:block th:each="travel: ${travels}">
+                    <tr>
+                        <td>[[${travel.dateParsed}]] [[${travel.timeParsed}]]</td>
+                        <td th:if="${travel.forward}">Чистополь - Казань</td>
+                        <td th:if="${!travel.forward}">Казань - Чистополь</td>
+                        <td>[[${travel.bus.busName}]] [[${travel.bus.number}]]</td>
+                        <td>
+                            <a th:href="@{'/travels/kazan-chistopol:' + ${travel.dateParsed} + '/' + ${travel.id}}"
+                               class="btn btn-lg btn-warning full_travel_button">
+                                [[${travel.dateParsed}]] [[${travel.timeParsed}]]
+                            </a>
+                        </td>
+                    </tr>
+                </th:block>
+                </tbody>
+            </table>
+        </div>
+    </main>
+</div>
+
+<footer class="footer mt-auto py-3" th:insert="~{layout/layouts.html :: footer}"></footer>
+</body>
+</html>

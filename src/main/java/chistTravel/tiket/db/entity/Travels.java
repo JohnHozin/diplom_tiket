@@ -13,29 +13,29 @@ public class Travels {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "bus_id", nullable = true)
+    @JoinColumn(name = "bus_id")
     private Bus bus;
 
     @ManyToOne
-    @JoinColumn(name = "driver_id", nullable = true)
+    @JoinColumn(name = "driver_id")
     private Driver driver;
 
     @OneToMany(mappedBy = "travel")
     private List<Route> routes;
 
-    @Column(nullable = true, length = 200)
+    @Column()
     private String timeToDrive;
 
-    @Column(nullable = true, length = 200)
+    @Column()
     private String timeParsed;
 
-    @Column(nullable = true, length = 200)
+    @Column()
     private String dateParsed;
 
-    @Column(nullable = true, length = 200)
+    @Column()
     private String dateFull;
 
-    @Column(nullable = true, length = 8)
+    @Column()
     private boolean forward;
 
     public Long getId() {
@@ -130,6 +130,8 @@ public class Travels {
                 ", forward=" + forward +
                 '}';
     }
+
+
 }
 
 

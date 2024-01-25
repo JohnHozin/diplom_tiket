@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ru" class="h-100" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Личный кабинет</title>
+
+    <link rel="shortcut icon" th:href="@{/bus.svg}" type="image/svg">
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+    <link href="/style.css" rel="stylesheet">
+</head>
+
+<body>
+<nav th:insert="~{layout/layouts.html :: navs}"></nav>
+
+<div class="container-fluid text-center m-auto">
+    <main>
+        <div th:if="${message != null}" class="alert alert-success">
+            [[${message}]]
+        </div>
+
+        <h4>Фамилия: [[${user.lastName}]]</h4>
+        <h4>Имя: [[${user.firstName}]]</h4>
+        <h4>Отчество: [[${user.surName}]]</h4>
+        <h4>Телефон: [[${user.username}]]</h4>
+
+        <div class="table-responsive mt-3">
+            <table class="table table-bordered">
+                <thead class="table-dark">
+                <tr>
+                    <th>Дата</th>
+                    <th>Направление</th>
+                    <th>Время</th>
+                    <th>Автобус</th>
+                </tr>
+                </thead>
+                <tbody>
+                <th:block th:each="route: ${travels}">
+                    <tr th:if="${route.travel.dateParsed == today}">
+                        <td>[[${route.travel.dateParsed}]]</td>
+                        <td th:if="${route.travel.forward}">Чистополь - Казань</td>
+                        <td th:if="${!route.travel.forward}">Казань - Чистополь</td>
+                        <td>[[${route.landingTime}]] [[${route.landingSite.placeName}]]</td>
+                        <td>[[${route.travel.bus.busName}]] [[${route.travel.bus.number}]]</td>
+                    </tr>
+                </th:block>
+                <th:block th:each="route: ${travels}">
+                    <tr th:if="${route.travel.dateParsed == tomorrow}">
+                        <td>[[${route.travel.dateParsed}]]</td>
+                        <td th:if="${route.travel.forward}">Чистополь - Казань</td>
+                        <td th:if="${!route.travel.forward}">Казань - Чистополь</td>
+                        <td>[[${route.landingTime}]] [[${route.landingSite.placeName}]]</td>
+                        <td>[[${route.travel.bus.busName}]] [[${route.travel.bus.number}]]</td>
+                    </tr>
+                </th:block>
+                <th:block th:each="route: ${travels}">
+                    <tr th:if="${route.travel.dateParsed == dayAfterTomorrow}">
+                        <td>[[${route.travel.dateParsed}]]</td>
+                        <td th:if="${route.travel.forward}">Чистополь - Казань</td>
+                        <td th:if="${!route.travel.forward}">Казань - Чистополь</td>
+                        <td>[[${route.landingTime}]] [[${route.landingSite.placeName}]]</td>
+                        <td>[[${route.travel.bus.busName}]] [[${route.travel.bus.number}]]</td>
+                    </tr>
+                </th:block>
+                </tbody>
+            </table>
+        </div>
+
+
+        <form th:if="${exit == 'yes'}" th:action="@{/logout}" method="post">
+            <button class="btn btn-danger">Выйти</button>
+        </form>
+    </main>
+</div>
+
+<footer class="footer mt-auto py-3" th:insert="~{layout/layouts.html :: footer}"></footer>
+</body>
+</html>

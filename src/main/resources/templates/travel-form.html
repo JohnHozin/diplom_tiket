@@ -11,11 +11,11 @@
     <link href="/style.css" rel="stylesheet">
 
     <!-- 1. Подключить CSS-файл Bootstrap 3 -->
-<!--    <link rel="stylesheet" href="css/bootstrap.min.css"/>-->
+    <!--    <link rel="stylesheet" href="css/bootstrap.min.css"/>-->
     <!-- 2. Подключить CSS-файл библиотеки Bootstrap 3 DateTimePicker -->
-    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap-datetimepicker.min.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap-datetimepicker.min.css}"/>
 
-    <link rel="stylesheet" href="css/bootstrap-datetimepicker.min.css" />
+    <link rel="stylesheet" href="css/bootstrap-datetimepicker.min.css"/>
 </head>
 
 <body>
@@ -28,7 +28,7 @@
         [[${message}]]
     </div>
 
-    <form th:action="@{/dispatcher/travels/new}" th:object="${travels}" method="post">
+    <form th:action="@{/dispatcher/travel/new}" th:object="${travels}" method="post">
 
         <select th:field="*{bus}">
             <th:block th:each="bus: ${busList}">
@@ -45,41 +45,39 @@
         <label>timeToDrive</label>
         <input type="datetime-local" th:field="*{timeToDrive}" required minlength="1" maxlength="50"/>
 
-        <p class="mb-3">Payment</p>
+        <!--        <p class="mb-3">Payment</p>-->
 
-        <div class="form-group w-25 text-center m-auto">
-            <label>Введите дату:</label>
-            <input type="date" class="form-control">
-        </div>
+        <!--        <div class="form-group w-25 text-center m-auto">-->
+        <!--            <label>Введите дату:</label>-->
+        <!--            <input type="date" class="form-control">-->
+        <!--        </div>-->
 
-        <div class="form-group">
-            <!-- элемент input с id = datetimepicker1 -->
-            <div class="input-group" id="datetimepicker1">
-                <input type="text" class="form-control" />
-                <span class="input-group-addon">
-      <span class="glyphicon glyphicon-calendar"></span>
-    </span>
-            </div>
-        </div>
+<!--        <div class="form-group">-->
+<!--            &lt;!&ndash; элемент input с id = datetimepicker1 &ndash;&gt;-->
+<!--            <div class="input-group" id="datetimepicker1">-->
+<!--                <input type="text" class="form-control"/>-->
+<!--                <span class="input-group-addon">-->
+<!--                    <span class="glyphicon glyphicon-calendar"></span>-->
+<!--                </span>-->
+<!--            </div>-->
+<!--        </div>-->
 
         <!-- Инициализация виджета "Bootstrap datetimepicker" -->
-        <script>
-            $(function () {
-                // идентификатор элемента (например: #datetimepicker1), для которого необходимо инициализировать виджет Bootstrap DateTimePicker
-                $('#datetimepicker1').datetimepicker();
-            });
-        </script>
+<!--        <script>-->
+<!--            $(function () {-->
+<!--                // идентификатор элемента (например: #datetimepicker1), для которого необходимо инициализировать виджет Bootstrap DateTimePicker-->
+<!--                $('#datetimepicker1').datetimepicker();-->
+<!--            });-->
+<!--        </script>-->
 
 
-
-
-<!--        <select th:field="*{forward}">-->
-<!--            <option th:value="0">Чистополь - Казань</option>-->
-<!--            <option th:value="1">Казань - Чистополь</option>-->
-<!--        </select>-->
+        <!--        <select th:field="*{forward}">-->
+        <!--            <option th:value="0">Чистополь - Казань</option>-->
+        <!--            <option th:value="1">Казань - Чистополь</option>-->
+        <!--        </select>-->
 
         <label>Global</label>
-            <input type="checkbox" th:field="${travels.forward}"/>
+        <input type="checkbox" th:field="${travels.forward}"/>
 
         <!--        <div class="my-3 w-25 justify-content-center">-->
         <!--            <div class="form-check">-->

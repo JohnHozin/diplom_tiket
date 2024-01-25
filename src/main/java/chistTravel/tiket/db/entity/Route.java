@@ -23,13 +23,13 @@ public class Route {
     @JoinColumn(name = "landingSite_id")
     private LandingSite landingSite;
 
-    @Column(length = 30)
+    @Column()
     private String landingTime;
 
-    @Column(length = 200)
+    @Column()
     private String registered;
 
-    @Column(name = "status")
+    @Column()
     private Boolean status;
 
     public Long getId() {
@@ -94,7 +94,6 @@ public class Route {
         return "Route{" +
                 "id=" + id +
                 ", user=" + user +
-//                ", travel=" + travel +
                 ", registered=" + registered +
                 '}';
     }

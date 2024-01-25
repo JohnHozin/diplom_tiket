@@ -28,7 +28,7 @@
                 <h1>Рейсы Чистополь - Казань</h1>
                 <th:block th:each="travels: ${travelsLists}">
                     <tr>
-                        <a th:if="${travels.forward}" th:href="@{'/dispatcher/travel/chistopol-kazan:' + ${travels.dateParsed} + '/' + ${travels.id}}"
+                        <a th:if="${travels.forward}" th:href="@{'/travels/chistopol-kazan:' + ${travels.dateParsed} + '/' + ${travels.id}}"
                            class="btn btn-lg btn-warning full_travel_button">
                             [[${travels.dateParsed}]] [[${travels.timeParsed}]]
                         </a>
@@ -37,7 +37,7 @@
                 <h1>Рейсы Казань - Чистополь</h1>
                 <th:block th:each="travels: ${travelsLists}">
                     <tr>
-                        <a th:if="${travels.forward}" th:href="@{'/dispatcher/travel/kazan-chistopol:' + ${travels.dateParsed} + '/' + ${travels.id}}"
+                        <a th:if="${travels.forward}" th:href="@{'travels/kazan-chistopol:' + ${travels.dateParsed} + '/' + ${travels.id}}"
                            class="btn btn-lg btn-warning full_travel_button">
                             [[${travels.dateParsed}]] [[${travels.timeParsed}]]
                         </a>

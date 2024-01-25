@@ -1,11 +1,13 @@
 package chistTravel.tiket.controller;
 
 import chistTravel.tiket.db.entity.*;
+import chistTravel.tiket.db.repository.UserRepository;
+import chistTravel.tiket.service.RoleJPAService;
 import chistTravel.tiket.service.RouteService;
 import chistTravel.tiket.service.TravelService;
 import chistTravel.tiket.service.UserJPAService;
-import chistTravel.tiket.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +20,7 @@ import java.security.Principal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Controller
@@ -26,16 +29,18 @@ public class RouteController {
     @Autowired
     private RouteService routeService;
     @Autowired
-    private UserService userService;
-    @Autowired
     private UserJPAService userJPAService;
     @Autowired
     private TravelService travelService;
-
-    private LocalDateTime time;
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private RoleJPAService roleJPAService;
 
     @GetMapping("")
     private String showAllTravelLists(Model model) {
+        String role = getRoles();
+        model.addAttribute("role", role);
         List<Route> routeList = routeService.listAllRoute();
         model.addAttribute("routeList", routeList);
         return "routes-list";
@@ -43,8 +48,10 @@ public class RouteController {
 
     @GetMapping("/new")
     public String showNewUserForm(Model model) {
+        String role = getRoles();
+        model.addAttribute("role", role);
         model.addAttribute("route", new Route());
-        List<UserJPA> userList = userService.listAllUsers();
+        List<UserJPA> userList = userJPAService.listAllUsers();
         model.addAttribute("userList", userList);
         List<Travels> travelsLists = travelService.listAllTravels();
         model.addAttribute("travelsLists", travelsLists);
@@ -54,7 +61,7 @@ public class RouteController {
     @PostMapping("/new")
     private String saveNewUser(Route route, RedirectAttributes ra) {
         route.setStatus(true);
-        time = LocalDateTime.now();
+        LocalDateTime time = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
         route.setRegistered(formatter.format(time));
         Route saved = routeService.saveRoute(route);
@@ -77,7 +84,9 @@ public class RouteController {
     }
 
     @GetMapping("/repair/{id}")
-    public String statusToTrueRoute(@PathVariable("id") Long id, RedirectAttributes ra) {
+    public String statusToTrueRoute(@PathVariable("id") Long id, RedirectAttributes ra, Model model) {
+        String role = getRoles();
+        model.addAttribute("role", role);
         routeService.statusToTrueRouteById(id);
         ra.addFlashAttribute("message", "Route repair by status");
         return "redirect:/routes";
@@ -85,6 +94,8 @@ public class RouteController {
 
     @GetMapping("/dispatcher1")
     private String showAllTravelListsToDispatcher(Model model, Principal principal) {
+        String role = getRoles();
+        model.addAttribute("role", role);
         List<Route> routeList = routeService.listAllRoute();
         List<Route> routeList2 = new ArrayList<>();
         for (int i = 0; i < routeList.size(); i++) {
@@ -93,7 +104,6 @@ public class RouteController {
             }
         }
         model.addAttribute("routeList", routeList2);
-//        System.out.println(userJPAService.findByUsername(principal.getName()).getUsername());
         model.addAttribute("userJPA",userJPAService.findByUsername(principal.getName()));
         return "routes-list-dispatcher";
     }
@@ -103,5 +113,25 @@ public class RouteController {
         routeService.statusToFalseRouteById(id);
         ra.addFlashAttribute("message", "Route deleted by status");
         return "redirect:/routes/dispatcher";
+    }
+
+    public String getRoles() {
+        String role = "";
+        String authenticationName = SecurityContextHolder.getContext().getAuthentication().getName();
+        if (!authenticationName.equals("anonymousUser")) {
+            UserJPA user = userRepository.findByUsername(authenticationName);
+            Collection<RoleJPA> roleJPAS = user.getRolesJPA();
+            List<RoleJPA> roleJPASAll = roleJPAService.listAllRoles();
+            if (roleJPAS.contains(roleJPASAll.get(0))) {
+                role = "ADMIN";
+            } else if (roleJPAS.contains(roleJPASAll.get(2))) {
+                role = "DISPATCHER";
+            } else if (roleJPAS.contains(roleJPASAll.get(3))) {
+                role = "DRIVER";
+            } else if (roleJPAS.contains(roleJPASAll.get(1))) {
+                role = "USER";
+            }
+        }
+        return role;
     }
 }

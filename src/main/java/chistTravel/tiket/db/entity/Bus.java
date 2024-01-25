@@ -12,13 +12,13 @@ public class Bus {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 20)
+    @Column(nullable = false)
     private String busName;
 
-    @Column(nullable = false, length = 20)
+    @Column(nullable = false, unique = true)
     private String number;
 
-    @Column(nullable = false, length = 20)
+    @Column(nullable = false)
     private int capacity;
 
     @OneToMany(mappedBy = "bus")
@@ -71,7 +71,6 @@ public class Bus {
                 ", busName='" + busName + '\'' +
                 ", number='" + number + '\'' +
                 ", capacity='" + capacity + '\'' +
-//                ", travels=" + travels +
                 '}';
     }
 }

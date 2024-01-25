@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
 
-    <title>Bus List</title>
+    <title>Список автобусов</title>
 
     <link rel="shortcut icon" th:href="@{bus.svg}" type="image/svg">
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
@@ -13,9 +13,9 @@
 <body class="d-flex flex-column h-100 bg-light">
 <nav th:insert="~{layout/layouts.html :: navs}"></nav>
 
-<div class="container text-center m-auto">
+<div class="container-fluid text-center m-auto">
     <main class="flex-shrink-0">
-        <h1>Welcome to Bus list</h1>
+        <h1>Список автобусов</h1>
 
         <div th:if="${message != null}" class="alert alert-success">
             [[${message}]]
@@ -25,44 +25,32 @@
             <table class="table table-bordered">
                 <thead class="table-dark">
                 <tr>
-                    <th>ID</th>
                     <th>Имя</th>
                     <th>Номер</th>
-                    <th>Поездки</th>
-                    <th>All</th>
-                    <!--            <th>Actions</th>-->
+                    <th>Вместимость</th>
+                    <th>Действия</th>
                 </tr>
                 </thead>
-                <!-- тело таблицы -->
                 <tbody>
-                <!-- цикл -->
                 <th:block th:each="bus: ${busList}">
                     <tr>
-                        <td>[[${bus.id}]]</td>
                         <td>[[${bus.busName}]]</td>
                         <td>[[${bus.number}]]</td>
-                        <td>[[${bus.travels}]]</td>
-                        <td>[[${bus}]]</td>
-                        <!--                <td>-->
-                        <!--                    &lt;!&ndash; детали &ndash;&gt;-->
-                        <!--                    <a th:href="@{'/users/details/' + ${user.id}}" class="btn btn-success">-->
-                        <!--                        Details-->
-                        <!--                    </a>-->
-                        <!--                    &lt;!&ndash; редактирование &ndash;&gt;-->
-                        <!--                    <a th:href="@{'/users/update/' + ${user.id}}" class="btn btn-warning">-->
-                        <!--                        Update-->
-                        <!--                    </a>-->
-                        <!--                    &lt;!&ndash; кнопка удаления &ndash;&gt;-->
-                        <!--                    <a th:href="@{'/users/delete/' + ${user.id}}" class="btn btn-danger">-->
-                        <!--                        Delete-->
-                        <!--                    </a>-->
-                        <!--                </td>-->
+                        <td>[[${bus.capacity}]]</td>
+                        <td>
+                            <a th:href="@{'/bus/update/' + ${bus.id}}" class="btn btn-success">
+                                Изменить
+                            </a>
+                            <a th:href="@{'/bus/delete/' + ${bus.id}}" class="btn btn-danger">
+                                Удалить
+                            </a>
+                        </td>
                     </tr>
                 </th:block>
                 </tbody>
             </table>
         </div>
-        <a th:href="@{/bus/new}" class="header">add new bus</a>
+        <a th:href="@{/bus/new}" class="btn btn-dark">Добавить новый автобус</a>
     </main>
 </div>
 

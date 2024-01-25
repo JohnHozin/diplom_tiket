@@ -53,6 +53,13 @@ body {
     margin-bottom: 10px;
 }
 
+.invalid_text {
+    width: 100%;
+    margin-top: 0.25rem;
+    font-size: .875em;
+    color: #dc3545;
+}
+
 @media screen and (max-width: 600px) {
     .index_button, .travel_button{
         min-width: 100px;

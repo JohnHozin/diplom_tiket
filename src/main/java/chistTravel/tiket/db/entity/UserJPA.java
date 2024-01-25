@@ -13,13 +13,13 @@ public class UserJPA {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true, length = 100)
-    private String username;
+    @Column(unique = true, nullable = false)
+    private String username; // номер телефона
 
-    @Column(length = 100)
+    @Column()
     private String password;
 
-    @Column(length = 50)
+    @Column()
     private String registered;
 
     @ManyToMany
@@ -28,25 +28,23 @@ public class UserJPA {
             inverseJoinColumns = @JoinColumn(name = "role_id_jpa"))
     private Collection<RoleJPA> rolesJPA;
 
-    @Column(length = 100)
+    @Column()
     private String firstName; // имя
 
-//    @Column(nullable = false, length = 100)
-    @Column(length = 100)
+    @Column(nullable = false)
     private String lastName; // фамилия
 
-    @Column(length = 100)
+    @Column()
     private String surName;
-
-//    @Column(nullable = false, length = 50)
-    @Column(unique = true, length = 50)
-    private String phone;
 
     @Column(length = 200)
     private String comment;
 
     @OneToMany(mappedBy = "user")
     private List<Route> travels;
+
+    @Column(nullable = false)
+    private boolean writtenByDispatcher;
 
     public Long getId() {
         return id;
@@ -112,14 +110,6 @@ public class UserJPA {
         this.surName = surName;
     }
 
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
     public String getComment() {
         return comment;
     }
@@ -136,18 +126,21 @@ public class UserJPA {
         this.travels = travels;
     }
 
+    public boolean isWrittenByDispatcher() {
+        return writtenByDispatcher;
+    }
+
+    public void setWrittenByDispatcher(boolean writtenByDispatcher) {
+        this.writtenByDispatcher = writtenByDispatcher;
+    }
+
     @Override
     public String toString() {
         return "UserJPA{" +
                 "id=" + id +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", registered='" + registered + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", surName='" + surName + '\'' +
-                ", phone='" + phone + '\'' +
-                ", comment='" + comment + '\'' +
+                ", username='" + username + '\'' +
                 '}';
     }
 }

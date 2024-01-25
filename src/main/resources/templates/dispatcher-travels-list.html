@@ -3,75 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
 
-    <title>Travels List</title>
+    <title>Order list</title>
 
-    <link rel="shortcut icon" th:href="@{bus.svg}" type="image/svg">
+    <link rel="shortcut icon" href="/bus.svg" type="image/svg">
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+    <link href="/style.css" rel="stylesheet">
 </head>
-<body class="d-flex flex-column h-100 bg-light">
+
+<body>
 <nav th:insert="~{layout/layouts.html :: navs}"></nav>
 
-<div class="container text-center m-auto">
-    <main class="flex-shrink-0">
+<div class="container-fluid text-center m-auto">
 
-        <h1>Welcome to Travels list</h1>
-
-        <a th:href="@{/dispatcher/travels/new}" class="header mt-4">Добавить новую поездку</a>
+    <main>
+        <h1>Рейсы [[${directionName}]] [[${dateParsed}]]</h1>
 
         <div th:if="${message != null}" class="alert alert-success">
             [[${message}]]
         </div>
 
-        <div class="table-responsive mt-4">
-            <table class="table table-bordered">
-                <thead class="table-dark">
-                <tr>
-                    <th>ID</th>
-                    <th>bus</th>
-                    <th>driver</th>
-                    <th>timeToDrive</th>
-                    <th>Routes</th>
-                    <th>ALL</th>
-                    <th>ALL</th>
-                </tr>
-                </thead>
-                <!-- тело таблицы -->
-                <tbody>
-                <!-- цикл -->
-                <th:block th:each="travels: ${travelsLists}">
+        <div class="table-responsive mt-3">
+            <table class="table table-borderless">
+                <thead>
+                <th:block th:each="travels: ${travelsInvalid}">
                     <tr>
-                        <td>[[${travels.id}]]</td>
-                        <td>[[${travels.bus.number}]]</td>
-                        <td>[[${travels.driver.firstName}]] [[${travels.driver.lastName}]]</td>
-                        <td>[[${travels.timeToDrive}]]</td>
-                        <td>
-                            [[${travels.routes}]]
-                            <!--          <th:block th:each="travels: ${travelsLists}">-->
-                            <!--            <span th:value="${travels.routes}">[[${travels.routes}]]</span>-->
-                            <!--          </th:block>-->
-                        </td>
+                        <!--                        th:text="${travels.timeParsed}"-->
+                        <a th:href="@{'/dispatcher/order/' + ${direction} + ':' + ${dateParsed} + '/' + ${travels.id}}"
+                           class="btn btn-secondary travel_button disabled px-1">
+                            <p>[[${travels.timeParsed}]]</p>
+                            <p>Запись закрыта</p>
+                        </a>
+                    </tr>
 
+                </th:block>
+                <th:block th:each="travels: ${travelsValid}">
+                    <tr>
+                        <a th:if="${travels.getRoutes.size < travels.bus.capacity}" th:href="@{'/dispatcher/order/' + ${direction} + ':' + ${dateParsed} + '/' + ${travels.id}}"
+                           class="btn btn-warning travel_button px-1">
+                            <p>[[${travels.timeParsed}]]</p>
+                            <p>Осталось мест: [[${travels.bus.capacity - travels.getRoutes.size}]]</p>
+                        </a>
 
-                        <td>[[${travels}]]</td>
-                        <td>
-                            <a th:href="@{'/dispatcher/travels/details/' + ${travels.id}}" class="btn btn-success">
-                                Details
-                            </a>
-                        </td>
-
+                        <a th:if="${travels.getRoutes.size == travels.bus.capacity}" th:href="@{'/dispatcher/order/' + ${direction} + ':' + ${dateParsed} + '/' + ${travels.id}}"
+                           class="btn btn-secondary travel_button disabled">
+                            <p>[[${travels.timeParsed}]]</p>
+                            <p>Мест нет</p>
+                        </a>
                     </tr>
                 </th:block>
-
-                </tbody>
+                </thead>
             </table>
         </div>
-
 
     </main>
 </div>
 
-<footer class="footer mt-auto py-3" th:insert="~{layout/layouts.html :: footer}"></footer>
+
+<footer class="footer py-3" th:insert="~{layout/layouts.html :: footer}"></footer>
 </body>
 </html>

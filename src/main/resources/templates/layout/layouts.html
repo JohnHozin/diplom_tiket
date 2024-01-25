@@ -10,46 +10,6 @@
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
 </head>
 <body>
-<nav class="navbar navbar-expand-sm navbar-dark bg-dark" aria-label="Third navbar example" th:fragment="navs">
-    <div class="container-fluid">
-        <a class="navbar-brand" th:href="@{/}">На главную</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample03"
-                aria-controls="navbarsExample03" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarsExample03">
-            <ul class="navbar-nav me-auto mb-2 mb-sm-0">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" th:href="@{/users}">Users</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" th:href="@{/drivers}">Drivers</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" th:href="@{/bus}">Bus</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" th:href="@{/travels}">Travels</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" th:href="@{/routes}">Routes</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" th:href="@{/routes/dispatcher1}">Dispatcher</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" th:href="@{/dispatcher/travel}">DisTravels</a>
-                </li>
-            </ul>
-        </div>
-        <form th:action="@{/logout}" method="post">
-            <button class="btn btn-danger">Выйти</button>
-        </form>
-    </div>
-    <script src="/js/bootstrap.bundle.min.js"></script>
-</nav>
-
 
 <!--фрагмент хедер login-->
 <nav class="navbar navbar-expand-sm navbar-dark bg-dark" aria-label="Third navbar example" th:fragment="navs_login">
@@ -59,10 +19,100 @@
 </nav>
 
 <!--фрагмент хедер index-->
-<nav class="navbar navbar-expand-sm navbar-dark bg-dark" aria-label="Third navbar example" th:fragment="navs_index">
-    <div class="container-fluid justify-content-end">
-        <a th:href="@{/login}" class="btn btn-lg btn-primary">Вход</a>
-        <a th:href="@{/registration}" class="btn btn-lg btn-success mx-sm-3 ms-1">Регистрация</a>
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark" aria-label="Third navbar example" th:fragment="navs">
+    <div class="container-fluid" th:if="${role == 'ADMIN'}">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample03"
+                aria-controls="navbarsExample03" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav me-auto mb-2 mb-sm-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" th:href="@{/users}">Пользователи</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" th:href="@{/drivers}">Водители</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" th:href="@{/bus}">Автобусы</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" th:href="@{/travels}">Маршруты</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" th:href="@{/dispatcher}">Диспетчер</a>
+                </li>
+            </ul>
+        </div>
+        <a th:href="@{/account}" class="btn btn-success">Профиль</a>
+    </div>
+    <div class="container-fluid" th:if="${role == 'DISPATCHER'}">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample03"
+                aria-controls="navbarsExample03" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav me-auto mb-2 mb-sm-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" th:href="@{/dispatcher}">На главную</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" th:href="@{/drivers}">Водители</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" th:href="@{/bus}">Автобусы</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" th:href="@{/travels}">Маршруты</a>
+                </li>
+            </ul>
+        </div>
+        <a th:href="@{/account}" class="btn btn-success">Профиль</a>
+    </div>
+    <div class="container-fluid" th:if="${role == 'DRIVER'}">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample03"
+                aria-controls="navbarsExample03" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav me-auto mb-2 mb-sm-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" th:href="@{/}">На главную</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" th:href="@{/account}">Профиль пассажира</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" th:href="@{/travels}">Маршруты</a>
+                </li>
+            </ul>
+        </div>
+        <a th:href="@{/drivers/accountDriver}" class="btn btn-success">Профиль водителя</a>
+    </div>
+    <div class="container-fluid" th:if="${role == 'USER'}">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample03"
+                    aria-controls="navbarsExample03" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav me-auto mb-2 mb-sm-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" th:href="@{/}">На главную</a>
+                    </li>
+                </ul>
+            </div>
+            <a th:href="@{/account}" class="btn btn-success">Профиль</a>
+        </div>
+    </div>
+    <div class="container-fluid" th:if="${role == ''}">
+        <div class="container-fluid justify-content-center">
+            <h1 class="text-light">Пассажирские перевозки</h1>
+        </div>
     </div>
 </nav>
 
@@ -72,7 +122,6 @@
         <p class="mb-1 unselectable">&copy; 2024 Евгений Хозин</p>
     </div>
 </footer>
-
 
 </body>
 </html>

@@ -1,11 +1,11 @@
 package chistTravel.tiket.controller;
 
 import chistTravel.tiket.db.entity.*;
-import chistTravel.tiket.service.LandingSiteService;
-import chistTravel.tiket.service.RouteService;
-import chistTravel.tiket.service.TravelService;
-import chistTravel.tiket.service.UserJPAService;
+import chistTravel.tiket.db.repository.RoleRepository;
+import chistTravel.tiket.db.repository.UserRepository;
+import chistTravel.tiket.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,12 +25,13 @@ public class OrderController {
 
     @Autowired
     private TravelService travelService;
-
     private LocalDateTime timeNow;
-
     @Autowired
     private UserJPAService userJPAService;
-
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private RoleJPAService roleJPAService;
     @Autowired
     private RouteService routeService;
     @Autowired
@@ -38,6 +39,8 @@ public class OrderController {
 
     @GetMapping("")
     private String showOrder(Model model) {
+        String role = getRoles();
+        model.addAttribute("role", role);
         List<Travels> travelsLists = travelService.listAllTravels();
         model.addAttribute("travelsLists", travelsLists);
         return "travels-list";
@@ -45,6 +48,8 @@ public class OrderController {
 
     @GetMapping("/{date}") // chistopol-kazan
     public String detailsTravelsForward(@PathVariable("date") String date, Model model) {
+        String role = getRoles();
+        model.addAttribute("role", role);
         String [] dateSplit = date.split(":");
         String dateParsed = dateSplit[1];
         String direction = dateSplit[0];
@@ -73,26 +78,18 @@ public class OrderController {
                 travelsInvalid.add(travel);
             }
         }
-//        travelsForDate.sort(Comparator.comparing(Travels::getTimeParsed));
-//        List travelsDateParsedDisabled = travelService.findTravelsByDateDisabled(dateParsed);
         model.addAttribute("travelsDateParsed", travelsDateParsed);
         model.addAttribute("travelsValid", travelsValid);
         model.addAttribute("travelsInvalid", travelsInvalid);
         model.addAttribute("dateParsed", dateParsed);
         model.addAttribute("direction", direction);
-//        Set<Route> usersInTravel = travels.getRoutes();
-//        model.addAttribute("usersInTravel", usersInTravel);
-
-//        List<Integer> listNumbers = new ArrayList<>();
-//        for (int i =1; i <=usersInTravel.size(); i ++){
-//            listNumbers.add(i);
-//        }
-//        model.addAttribute("listNumbers", listNumbers);
         return "order-list";
     }
 
     @GetMapping("/{date}/{id}")
     public String detailsOrder(@PathVariable("id") Long id, @PathVariable("date") String date, Model model) {
+        String role = getRoles();
+        model.addAttribute("role", role);
         String [] dateSplit = date.split(":");
         String dateParsed = dateSplit[1];
         String direction = dateSplit[0];
@@ -108,47 +105,62 @@ public class OrderController {
         Travels travel = travelService.findTravelsById(id);
         model.addAttribute("travels", travel);
         List<Route> usersInTravel = travel.getRoutes();
-        // перенести эту логику в форму записи
-//        LocalTime time = LocalTime.parse(travel.getTimeParsed());
-//        for (Route route : usersInTravel) {
-//            LocalTime time1 = time.minusMinutes(Long.parseLong(route.getLandingSite().getTime()));
-//            route.setLandingTime(time1.toString());
-//        }
-        // !!!
         usersInTravel.sort(Comparator.comparing(Route::getLandingTime));
         model.addAttribute("usersInTravel", usersInTravel);
-//        List<Integer> listNumbers = new ArrayList<>();
-//        for (int i = 1; i <= usersInTravel.size(); i++) {
-//            listNumbers.add(i);
-//        }
-//        model.addAttribute("listNumbers", listNumbers);
         model.addAttribute("route", new Route());
         List<LandingSite> landingSites = landingSiteService.listAllLandingSites();
         LocalTime time = LocalTime.parse(travel.getTimeParsed());
+        List<LandingSite> landingSitesDirection= new ArrayList<>();
         for (LandingSite landingSite : landingSites) {
-            LocalTime time1 = time.minusMinutes(Long.parseLong(landingSite.getTime()));
-            landingSite.setTime(time1.toString());
+            if (direction.equals("chistopol-kazan") && landingSite.isDirection()) {
+                LocalTime time1 = time.minusMinutes(Long.parseLong(landingSite.getTime()));
+                landingSite.setTime(time1.toString());
+                landingSitesDirection.add(landingSite);
+            } else if (direction.equals("kazan-chistopol") && !landingSite.isDirection()) {
+                LocalTime time1 = time.minusMinutes(Long.parseLong(landingSite.getTime()));
+                landingSite.setTime(time1.toString());
+                landingSitesDirection.add(landingSite);
+            }
         }
-        landingSites.sort(Comparator.comparing(LandingSite::getTime));
-        model.addAttribute("landingSites", landingSites);
+        landingSitesDirection.sort(Comparator.comparing(LandingSite::getTime));
+        model.addAttribute("landingSites", landingSitesDirection);
         return "order-details";
     }
 
-    @PostMapping ("/{date}/{id}")
-    public String detailsOrderPost(@PathVariable("id") Long id, @PathVariable("date") String date, Route route, Principal principal, RedirectAttributes ra) {
+    @PostMapping ("/{date}/{id_travel}")
+    public String detailsOrderPost(@PathVariable("id_travel") Long id_travel, @PathVariable("date") String date, Route route, Principal principal, RedirectAttributes ra) {
         route.setStatus(true);
         timeNow = LocalDateTime.from(ZonedDateTime.now(ZoneId.of("Africa/Addis_Ababa")));
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
         route.setRegistered(formatter.format(timeNow));
         route.setUser(userJPAService.findByUsername(principal.getName()));
-        Travels travel = travelService.findTravelsById(id);
+        Travels travel = travelService.findTravelsById(id_travel);
         route.setTravel(travel);
         LocalTime time = LocalTime.parse(travel.getTimeParsed());
         LocalTime time1 = time.minusMinutes(Long.parseLong(route.getLandingSite().getTime()));
         route.setLandingTime(time1.toString());
-        Route saved = routeService.saveRoute(route);
-//        ra.addFlashAttribute("message", "Route " + saved + " saved successfully");
+        routeService.saveRoute(route);
         ra.addFlashAttribute("message", "Вы успешно записались на рейс");
         return "redirect:/order/{date}";
+    }
+
+    public String getRoles() {
+        String role = "";
+        String authenticationName = SecurityContextHolder.getContext().getAuthentication().getName();
+        if (!authenticationName.equals("anonymousUser")) {
+            UserJPA user = userRepository.findByUsername(authenticationName);
+            Collection<RoleJPA> roleJPAS = user.getRolesJPA();
+            List<RoleJPA> roleJPASAll = roleJPAService.listAllRoles();
+            if (roleJPAS.contains(roleJPASAll.get(0))) {
+                role = "ADMIN";
+            } else if (roleJPAS.contains(roleJPASAll.get(2))) {
+                role = "DISPATCHER";
+            } else if (roleJPAS.contains(roleJPASAll.get(3))) {
+                role = "DRIVER";
+            } else if (roleJPAS.contains(roleJPASAll.get(1))) {
+                role = "USER";
+            }
+        }
+        return role;
     }
 }

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ru" class="h-100" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Пассажирские перевозки</title>
+
+    <link rel="shortcut icon" th:href="@{bus.svg}" type="image/svg">
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+    <link href="/signin.css" rel="stylesheet">
+    <link href="/style.css" rel="stylesheet">
+</head>
+
+<body>
+<nav th:insert="~{layout/layouts.html :: navs}"></nav>
+
+<div class="container text-center m-auto">
+
+    <main>
+        <div class="py-5 text-center">
+            <img class="d-block mx-auto mb-4" src="/bus.svg" alt="" width="72" height="57">
+            <h2 th:if="${busNew == 'yes'}">Добавление нового автобуса</h2>
+            <h2 th:if="${busNew == 'no'}">Изменение автобуса</h2>
+            <i class="bi bi-bus-front-fill"></i>
+        </div>
+
+        <div class="row justify-content-center">
+            <div th:if="${busNew == 'yes'}" class="col-md-7 col-lg-8">
+                <form th:action="@{/bus/new}" th:object="${bus}" method="post" class="needs-validation" novalidate>
+                    <div class="row g-3">
+                        <div class="col-sm-12">
+                            <label class="form-label">Название</label>
+                            <input th:field="*{busName}" minlength="1" maxlength="50" type="text" class="form-control"
+                                   placeholder="Пежо Боксер" required>
+                            <div class="invalid-feedback">
+                                Требуется название
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12">
+                            <label class="form-label">Номер</label>
+                            <input th:field="*{number}" minlength="1" maxlength="50" type="text" class="form-control"
+                                   placeholder="АС 001 16" value="" required>
+                            <div class="invalid-feedback">
+                                Требуется номер
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <label class="form-label">Вместимость</label>
+                            <div class="input-group has-validation">
+                                <input th:field="*{capacity}" minlength="1" maxlength="50" type="text"
+                                       class="form-control" placeholder="17" required>
+                                <div class="invalid-feedback">
+                                    Требуется вместимость
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="my-4">
+                    <button class="w-100 btn btn-primary btn-lg" type="submit">Зарегистрироваться</button>
+                </form>
+            </div>
+
+            <div th:if="${busNew == 'no'}" class="col-md-7 col-lg-8">
+                <form th:action="@{'/bus/update/' + ${id}}" th:object="${bus}" method="post" class="needs-validation"
+                      novalidate>
+                    <div class="row g-3">
+                        <div class="col-sm-12">
+                            <label class="form-label">Название</label>
+                            <input th:field="*{busName}" minlength="1" maxlength="50" type="text" class="form-control"
+                                   placeholder="Пежо Боксер" required>
+                            <div class="invalid-feedback">
+                                Требуется название
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12">
+                            <label class="form-label">Номер</label>
+                            <input th:field="*{number}" minlength="1" maxlength="50" type="text" class="form-control"
+                                   placeholder="АС 001 16" value="" required>
+                            <div class="invalid-feedback">
+                                Требуется номер
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <label class="form-label">Вместимость</label>
+                            <div class="input-group has-validation">
+                                <input th:field="*{capacity}" minlength="1" maxlength="50" type="text"
+                                       class="form-control" placeholder="17" required>
+                                <div class="invalid-feedback">
+                                    Требуется вместимость
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="my-4">
+                    <button class="w-100 btn btn-primary btn-lg" type="submit">Зарегистрироваться</button>
+                </form>
+            </div>
+        </div>
+    </main>
+</div>
+
+<footer class="footer mt-auto py-3" th:insert="~{layout/layouts.html :: footer}"></footer>
+<script src="/form-validation.js"></script>
+</body>
+</html>

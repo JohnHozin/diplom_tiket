@@ -26,16 +26,16 @@
         <div class="container-fluid text-center mt-5">
             <h3>Чистополь - Казань</h3>
             <div class="me-auto mb-2 mb-sm-0 row-cols-auto">
-                <a th:href="@{'/order/chistopol-kazan:' + ${today}}" class="btn btn-warning index_button">Сегодня ([[${today}]])</a>
-                <a th:href="@{'/order/chistopol-kazan:' + ${tomorrow}}" class="btn btn-warning index_button">Завтра ([[${tomorrow}]])</a>
-                <a th:href="@{'/order/chistopol-kazan:' + ${dayAfterTomorrow}}" class="btn btn-warning index_button">Послезавтра ([[${dayAfterTomorrow}]])</a>
+                <a th:href="@{'/dispatcher/order/chistopol-kazan:' + ${today}}" class="btn btn-warning index_button">Сегодня ([[${today}]])</a>
+                <a th:href="@{'/dispatcher/order/chistopol-kazan:' + ${tomorrow}}" class="btn btn-warning index_button">Завтра ([[${tomorrow}]])</a>
+                <a th:href="@{'/dispatcher/order/chistopol-kazan:' + ${dayAfterTomorrow}}" class="btn btn-warning index_button">Послезавтра ([[${dayAfterTomorrow}]])</a>
             </div>
 
             <h3 class="mt-5">Казань - Чистополь</h3>
             <div class="me-auto mb-2 mb-sm-0 row-cols-auto">
-                <a th:href="@{'/order/kazan-chistopol:' + ${today}}" class="btn btn-warning index_button">Сегодня ([[${today}]])</a>
-                <a th:href="@{'/order/kazan-chistopol:' + ${tomorrow}}" class="btn btn-lg btn-warning index_button">Завтра ([[${tomorrow}]])</a>
-                <a th:href="@{'/order/kazan-chistopol:' + ${dayAfterTomorrow}}" class="btn btn-lg btn-warning index_button">Послезавтра ([[${dayAfterTomorrow}]])</a>
+                <a th:href="@{'/dispatcher/order/kazan-chistopol:' + ${today}}" class="btn btn-warning index_button">Сегодня ([[${today}]])</a>
+                <a th:href="@{'/dispatcher/order/kazan-chistopol:' + ${tomorrow}}" class="btn btn-lg btn-warning index_button">Завтра ([[${tomorrow}]])</a>
+                <a th:href="@{'/dispatcher/order/kazan-chistopol:' + ${dayAfterTomorrow}}" class="btn btn-lg btn-warning index_button">Послезавтра ([[${dayAfterTomorrow}]])</a>
             </div>
         </div>
     </main>
