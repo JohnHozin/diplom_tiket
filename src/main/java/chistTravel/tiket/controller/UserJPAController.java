@@ -72,10 +72,7 @@ public class UserJPAController {
         String hashedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(hashedPassword);
         ArrayList<RoleJPA> roles = new ArrayList<>();
-        roles.add(roleJPAService.listAllRoles().get(0));
         roles.add(roleJPAService.listAllRoles().get(1));
-        roles.add(roleJPAService.listAllRoles().get(2));
-        roles.add(roleJPAService.listAllRoles().get(3));
         user.setRolesJPA(roles);
 
         LocalDateTime time = LocalDateTime.from(ZonedDateTime.now(ZoneId.of("Africa/Addis_Ababa")));

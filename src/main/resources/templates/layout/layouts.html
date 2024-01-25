@@ -109,10 +109,9 @@
             <a th:href="@{/account}" class="btn btn-success">Профиль</a>
         </div>
     </div>
-    <div class="container-fluid" th:if="${role == ''}">
-        <div class="container-fluid justify-content-center">
-            <h1 class="text-light">Пассажирские перевозки</h1>
-        </div>
+    <div class="container-fluid justify-content" th:if="${role == ''}">
+        <h1 class="text-light">Пассажирские перевозки</h1>
+        <a th:href="@{/login}" class="btn btn-info">Вход</a>
     </div>
 </nav>
 
