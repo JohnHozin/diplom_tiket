@@ -15,6 +15,7 @@
 
 - Демонстрационный сайт доступен по адресу: https://chistaitravel.ru/
 - Код проекта: https://github.com/JohnHozin/diplom_tiket
+- Диплом: https://github.com/JohnHozin/diplom_tiket/blob/main/%D0%B4%D0%B8%D0%BF%D0%BB%D0%BE%D0%BC.docx
 
 ## Автор
 
