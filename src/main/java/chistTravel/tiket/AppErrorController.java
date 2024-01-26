@@ -14,6 +14,7 @@ public class AppErrorController implements ErrorController {
     // метод обработки запрос с ошибкой
     @RequestMapping("/error")
     public String handleError(HttpServletRequest request, Model model){
+        model.addAttribute("role", "USER");
         // ...
         model.addAttribute("message", "Error: " +
                 request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE));

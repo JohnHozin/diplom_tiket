@@ -26,14 +26,13 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((requests) -> requests
-                                .requestMatchers("/", "/login", "/webjars/**", "/ava_bus.png", "/bus.svg", "signin.css", "style.css", "/registration", "form-validation.js", "/order/*").permitAll()
+                                .requestMatchers("/", "/login", "/webjars/**", "/ava_bus.png", "/bus.svg", "signin.css", "style.css", "/registration", "/js/**", "/order/*").permitAll()
                                 .requestMatchers("/users/details/**").hasRole("DISPATCHER")
                                 .requestMatchers("/users/**").hasRole("ADMIN")
-                                .requestMatchers("/bus/**").hasRole("ADMIN")
+                                .requestMatchers("/bus/**").hasRole("DISPATCHER")
                                 .requestMatchers("/drivers/accountDriver").hasRole("DRIVER")
                                 .requestMatchers("/drivers/**").hasRole("DISPATCHER")
                                 .requestMatchers("/dispatcher/**").hasRole("DISPATCHER")
-                                .requestMatchers("/travels/**").hasRole("DRIVER")
                                 .requestMatchers("/travels/**").hasRole("DISPATCHER")
                                 .anyRequest().authenticated()
 
